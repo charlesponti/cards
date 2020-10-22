@@ -64,6 +64,13 @@ class Deck {
         
         return hand
     }
+
+    collectHands() {
+        for (let card of this.hands.flat()) {
+            this.cards.push(card)
+        }
+        this.hands = []
+    }
 }
 
 export default Deck

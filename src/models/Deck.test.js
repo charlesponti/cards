@@ -1,4 +1,5 @@
 const { default: Deck } = require("./Deck")
+const { uniq } = require('lodash')
 
 describe('Deck', () => {
     let deck
@@ -30,5 +31,15 @@ describe('Deck', () => {
             expect(deck.cards.filter(card => combos.indexOf(card.id) !== -1)).toEqual([])
             i += 1
         }
+    })
+
+    test('it should return hands to deck', () => {
+        while (deck.cards.length >= 5) {
+            deck.deal()
+        }
+        expect(deck.cards.length < 5).toEqual(true)
+        deck.collectHands()
+        expect(uniq(deck.cards.map(c => c.id)).length).toEqual(52)
+        expect(deck.hands.length).toEqual(0)
     })
 })
