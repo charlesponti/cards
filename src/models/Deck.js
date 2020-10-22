@@ -44,12 +44,16 @@ class Deck {
      * @description Get random card from deck
      * @returns {{ id: string, suit: string, rank: string }}
      */
-    getRandomCard() {
+    pullCard() {
         /**
          * NOTE: We use `this.cards.length` instead of 52 because the length of the deck will
          * change as cards are dealt
+         * @type {Number}
          */
-        return this.cards[Math.floor(Math.random() * Math.floor(this.cards.length))]
+        const cardIdx = Math.floor(Math.random() * Math.floor(this.cards.length))
+
+        // Remove card from deck
+        return this.cards.splice(cardIdx, 1)[0]
     }
     
     /**
@@ -58,19 +62,12 @@ class Deck {
      */
     deal() {
         const cards = []
-        const combos = []
         const id = uuidv4()
 
+        // Add cards to hand
         while (cards.length !== 5) {
-            const card = this.getRandomCard()
-            if (combos.indexOf(card.id) === -1) {
-                combos.push(card.id)
-                cards.push(card)
-            }
+            cards.push(this.pullCard())
         }
-
-        // Remove card from deck
-        this.cards = this.cards.filter(card => combos.indexOf(card.id) === -1)
 
         // Add hand to current hands
         this.hands.set(id, cards)
@@ -78,25 +75,37 @@ class Deck {
         return { id, cards }
     }
 
+    /**
+     * @description Collect all hands and return to deck
+     * @returns {Deck}
+     */
     collectHands() {
         for (let hand of this.hands.values()) {
             for (const card of hand) {
                 this.cards.push(card)
             }
         }
+        
+        // Empty `hands` Map
         this.hands.clear()
+        
+        // Return Deck to allow for method chaining
+        return this
     }
 
+    /**
+     * @description Pull card from deck and add to hand
+     * @param {String} handId - Id of hand
+     * @returns {Deck}
+     */
     dealToHand(handId) {
-        const card = this.getRandomCard()
-        const handCards = this.hands.get(handId)
-        
         this.hands.set(
             handId, 
-            [...handCards, card]
+            [...this.hands.get(handId), this.pullCard()]
         )
-
-        this.cards = this.cards.filter(c => c.id !== getCardString(card))
+        
+        // Return Deck to allow for method chaining
+        return this
     }
 }
 

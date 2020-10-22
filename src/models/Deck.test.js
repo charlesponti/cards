@@ -37,6 +37,12 @@ describe('Deck', () => {
         }
     })
 
+    test('pullCard should remove card from deck', () => {
+        const card = deck.pullCard()
+        expect(deck.cards.find(c => c.id === card.id)).toEqual(undefined)
+        expect(card).not.toBeNull()
+    })
+
     test('it should return hands to deck', () => {
         while (deck.cards.length >= 5) {
             deck.deal()
