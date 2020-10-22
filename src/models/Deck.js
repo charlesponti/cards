@@ -12,9 +12,9 @@ class Deck {
     cards = []
     
     /**
-     * @type {[[{ id: string, suit: string, rank: string }]]}
+     * @type {Map}
      */
-    hands = []
+    hands = new Map()
 
     suits = ['spades', 'diamonds', 'hearts', 'clubs']
 
@@ -47,6 +47,10 @@ class Deck {
         return this.cards[Math.floor(Math.random() * Math.floor(this.cards.length))]
     }
     
+    /**
+     * @description Create a new hand
+     * @returns {Map}
+     */
     deal() {
         const hand = []
         const combos = []
@@ -63,16 +67,18 @@ class Deck {
         this.cards = this.cards.filter(card => combos.indexOf(card.id) === -1)
 
         // Add hand to current hands
-        this.hands.push(hand)
+        this.hands.set(uuidv4(), hand)
         
         return hand
     }
 
     collectHands() {
-        for (let card of this.hands.flat()) {
-            this.cards.push(card)
+        for (let hand of this.hands.values()) {
+            for (const card of hand) {
+                this.cards.push(card)
+            }
         }
-        this.hands = []
+        this.hands.clear()
     }
 }
 

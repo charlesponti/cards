@@ -2,6 +2,9 @@ const { default: Deck } = require("./Deck")
 const { uniq } = require('lodash')
 
 describe('Deck', () => {
+    /**
+     * @type {Deck}
+     */
     let deck
     
     beforeEach(() => {
@@ -28,7 +31,7 @@ describe('Deck', () => {
             const hand = deck.deal()
             const combos = hand.map(c => c.id)
             expect(hand.length).toEqual(5)
-            expect(deck.hands.length).toEqual(i)
+            expect(deck.hands.size).toEqual(i)
             expect(deck.cards.filter(card => combos.indexOf(card.id) !== -1)).toEqual([])
             i += 1
         }
@@ -41,10 +44,11 @@ describe('Deck', () => {
         expect(deck.cards.length < 5).toEqual(true)
         deck.collectHands()
         expect(uniq(deck.cards.map(c => c.id)).length).toEqual(52)
-        expect(deck.hands.length).toEqual(0)
+        expect(deck.hands.size).toEqual(0)
     })
 
-    test('it should add card to hand', () => {
+    xtest('it should add card to hand', () => {
         const hand = deck.deal()
+        deck.dealToHand()
     })
 })
