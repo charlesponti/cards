@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 
 const getCardString = c => `${c.suit} ${c.rank}`
 
@@ -11,9 +12,9 @@ class Deck {
     cards = []
     
     /**
-     * @type {[[{ id: string, suit: string, rank: string }]]}
+     * @type {Map}
      */
-    hands = []
+    hands = new Map()
 
     suits = ['spades', 'diamonds', 'hearts', 'clubs']
 
@@ -23,6 +24,8 @@ class Deck {
      * Create a deck of cards
      */
     constructor() {
+        this.id = uuidv4()
+        
         // Create suite of each suit
         for (let suit of this.suits) {
             // Create card for each rank in each suit
@@ -44,15 +47,20 @@ class Deck {
         return this.cards[Math.floor(Math.random() * Math.floor(this.cards.length))]
     }
     
+    /**
+     * @description Create a new hand
+     * @returns {Map}
+     */
     deal() {
-        const hand = []
+        const cards = []
         const combos = []
-        
-        while (hand.length !== 5) {
+        const id = uuidv4()
+
+        while (cards.length !== 5) {
             const card = this.getRandomCard()
             if (combos.indexOf(card.id) === -1) {
                 combos.push(card.id)
-                hand.push(card)
+                cards.push(card)
             }
         }
 
@@ -60,16 +68,30 @@ class Deck {
         this.cards = this.cards.filter(card => combos.indexOf(card.id) === -1)
 
         // Add hand to current hands
-        this.hands.push(hand)
+        this.hands.set(id, cards)
         
-        return hand
+        return { id, cards }
     }
 
     collectHands() {
-        for (let card of this.hands.flat()) {
-            this.cards.push(card)
+        for (let hand of this.hands.values()) {
+            for (const card of hand) {
+                this.cards.push(card)
+            }
         }
-        this.hands = []
+        this.hands.clear()
+    }
+
+    dealToHand(handId) {
+        const card = this.getRandomCard()
+        const handCards = this.hands.get(handId)
+        
+        this.hands.set(
+            handId, 
+            [...handCards, card]
+        )
+
+        this.cards = this.cards.filter(c => c.id !== getCardString(card))
     }
 }
 
