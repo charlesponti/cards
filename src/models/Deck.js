@@ -2,6 +2,28 @@ import { v4 as uuidv4 } from 'uuid'
 
 const getCardString = c => `${c.suit} ${c.rank}`
 
+class Card {
+    /**
+     * @type {String}
+     */
+    id;
+
+    /**
+     * @type {String}
+     */
+    suit;
+
+    /**
+     * @type {String}
+     */
+    rank;
+
+    /**
+     * @type {Number}
+     */
+    value;
+}
+
 /**
  * @description Class representing a deck of cards.
  */
@@ -12,7 +34,7 @@ class Deck {
     cards = []
     
     /**
-     * @type {Map}
+     * @type {Map<String, [Card]>}
      */
     hands = new Map()
 
@@ -58,14 +80,15 @@ class Deck {
     
     /**
      * @description Create a new hand
-     * @returns {Map}
+     * @param {Number} handLength - Length of hand
+     * @returns {{ id: string, cards: [Card] }}
      */
-    deal() {
+    deal(handLength = 5) {
         const cards = []
         const id = uuidv4()
 
         // Add cards to hand
-        while (cards.length !== 5) {
+        while (cards.length < handLength) {
             cards.push(this.pullCard())
         }
 
