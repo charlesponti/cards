@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 
 const getCardString = c => `${c.suit} ${c.rank}`
 
@@ -23,6 +24,8 @@ class Deck {
      * Create a deck of cards
      */
     constructor() {
+        this.id = uuidv4()
+        
         // Create suite of each suit
         for (let suit of this.suits) {
             // Create card for each rank in each suit
