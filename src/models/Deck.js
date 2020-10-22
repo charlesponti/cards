@@ -52,14 +52,15 @@ class Deck {
      * @returns {Map}
      */
     deal() {
-        const hand = []
+        const cards = []
         const combos = []
-        
-        while (hand.length !== 5) {
+        const id = uuidv4()
+
+        while (cards.length !== 5) {
             const card = this.getRandomCard()
             if (combos.indexOf(card.id) === -1) {
                 combos.push(card.id)
-                hand.push(card)
+                cards.push(card)
             }
         }
 
@@ -67,9 +68,9 @@ class Deck {
         this.cards = this.cards.filter(card => combos.indexOf(card.id) === -1)
 
         // Add hand to current hands
-        this.hands.set(uuidv4(), hand)
+        this.hands.set(id, cards)
         
-        return hand
+        return { id, cards }
     }
 
     collectHands() {
@@ -79,6 +80,18 @@ class Deck {
             }
         }
         this.hands.clear()
+    }
+
+    dealToHand(handId) {
+        const card = this.getRandomCard()
+        const handCards = this.hands.get(handId)
+        
+        this.hands.set(
+            handId, 
+            [...handCards, card]
+        )
+
+        this.cards = this.cards.filter(c => c.id !== getCardString(card))
     }
 }
 
