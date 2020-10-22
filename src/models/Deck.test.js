@@ -59,4 +59,12 @@ describe('Deck', () => {
         expect(deck.hands.get(hand.id).length).toEqual(7)
         expect(deck.cards.length).toEqual(52 - 5 - 2)
     })
+
+    test('it should add value to cards', () => {
+        const twoOfHearts = deck.cards.find(c => c.id === 'hearts 2')
+        const twoOfDiamonds = deck.cards.find(c => c.id === 'diamonds 2')
+        const twoOfSpades = deck.cards.find(c => c.id === 'spades 2')
+        expect(twoOfHearts.value).toBeGreaterThan(twoOfDiamonds.value)
+        expect(twoOfHearts.value).toBeLessThan(twoOfSpades.value)
+    })
 })
