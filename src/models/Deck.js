@@ -16,9 +16,9 @@ class Deck {
      */
     hands = new Map()
 
-    suits = ['spades', 'diamonds', 'hearts', 'clubs']
+    suits = ['clubs', 'diamonds', 'hearts', 'spades']
 
-    ranks = ['A', ...[...new Array(9)].map((v, i) => (i + 2).toString()), 'J', 'Q', 'K']
+    ranks = [...[...new Array(9)].map((v, i) => (i + 2).toString()), 'J', 'Q', 'K', 'A']
 
     /**
      * Create a deck of cards
@@ -27,10 +27,15 @@ class Deck {
         this.id = uuidv4()
         
         // Create suite of each suit
-        for (let suit of this.suits) {
+        for (const [suitIdx, suit] of this.suits.entries()) {
             // Create card for each rank in each suit
-            for (let rank of this.ranks) {
-                this.cards.push({ id: getCardString({suit, rank}), suit, rank })
+            for (const [rankIdx, rank] of this.ranks.entries()) {
+                this.cards.push({ 
+                    id: getCardString({suit, rank}), 
+                    suit, 
+                    rank, 
+                    value: (suitIdx + rankIdx) 
+                })
             }
         }
     }
