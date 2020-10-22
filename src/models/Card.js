@@ -1,5 +1,4 @@
 import { RANKS, SUITS } from '../constants';
-import Deck from './Deck'
 
 class Card {
     /**
