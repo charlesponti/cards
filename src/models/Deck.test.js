@@ -19,4 +19,16 @@ describe('Deck', () => {
         expect(deck.cards.find(c => c.suit === 'clubs' && c.rank === '5')).not.toEqual(undefined)
         expect(deck.cards.find(c => c.suit === 'clubs' && c.rank === '1')).toEqual(undefined)
     })
+
+    test('it should deal 5 cards', () => {
+        let i = 1
+        while (deck.cards.length >= 5) {
+            const hand = deck.deal()
+            const combos = hand.map(c => c.id)
+            expect(hand.length).toEqual(5)
+            expect(deck.hands.length).toEqual(i)
+            expect(deck.cards.filter(card => combos.indexOf(card.id) !== -1)).toEqual([])
+            i += 1
+        }
+    })
 })
