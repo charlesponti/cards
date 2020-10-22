@@ -12,24 +12,39 @@ const useStyles = makeStyles({
   },
   buttonContainer: {
     marginTop: '2rem'
+  },
+  winner: {
+    color: 'green',
+    backgroundColor: 'green'
   }
 })
 
 function App() {
   const [deck] = useState(new Deck())
   const [hands, setHands] = useState([])
-  const styles = useStyles()  
+  const [ winner, setWinner ] = useState(undefined)
+  const styles = useStyles()
 
   function onCreateHand() {
     const hand = deck.deal()
+    
+    if (winner && hand.score > winner.score) setWinner(hand)
+    else if (winner === undefined) setWinner(hand)
+
     setHands([...hands, hand])
   }
 
   return (
     <div className="App">
-        <h1>Cards 'n Such</h1>
+        <h1>Luck Of The Draw</h1>
         <Grid direction="column" container>
-          {hands.map((hand) => <Hand key={hand.id} {...hand} />)}
+          {hands.map((hand) => (
+              <Hand 
+                key={hand.id} 
+                {...hand} 
+                isWinner={winner.id === hand.id}
+              />
+          ))}
         </Grid>
         <div className={styles.buttonContainer}>
           <Button 

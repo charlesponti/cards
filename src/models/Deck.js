@@ -50,7 +50,7 @@ class Deck {
     /**
      * @description Create a new hand
      * @param {Number} length - Length of hand
-     * @returns {{ id: string, cards: [Card] }}
+     * @returns {{ id: String, cards: [Card], score: Number }}
      */
     deal(length = 5) {
         // const cards = []
@@ -62,7 +62,11 @@ class Deck {
         // Add hand to current hands
         this.hands.set(id, cards)
         
-        return { id, cards }
+        return { 
+            id, 
+            cards, 
+            score: cards.reduce((sum, c) => sum + c.value, 0)
+        }
     }
 
     /**

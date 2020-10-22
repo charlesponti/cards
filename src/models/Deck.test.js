@@ -40,6 +40,7 @@ describe('Deck', () => {
             while (deck.cards.length > handLength) {
                 const hand = deck.deal(handLength)
                 expect(hand.cards.length).toEqual(handLength)
+                expect(hand.score).toEqual(hand.cards.reduce((sum, c) => sum + c.value, 0))
                 expect(deck.cards.length).toEqual(52 - (handLength * i))
                 expect(deck.hands.size).toEqual(i)
                 i += 1
