@@ -1,28 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
-
-const getCardString = c => `${c.suit} ${c.rank}`
-
-class Card {
-    /**
-     * @type {String}
-     */
-    id;
-
-    /**
-     * @type {String}
-     */
-    suit;
-
-    /**
-     * @type {String}
-     */
-    rank;
-
-    /**
-     * @type {Number}
-     */
-    value;
-}
+import { RANKS, SUITS } from '../constants'
+import Card from './Card'
 
 /**
  * @description Class representing a deck of cards.
@@ -38,10 +16,6 @@ class Deck {
      */
     hands = new Map()
 
-    suits = ['clubs', 'diamonds', 'hearts', 'spades']
-
-    ranks = [...[...new Array(9)].map((v, i) => (i + 2).toString()), 'J', 'Q', 'K', 'A']
-
     /**
      * Create a deck of cards
      */
@@ -49,22 +23,17 @@ class Deck {
         this.id = uuidv4()
         
         // Create suite of each suit
-        for (const [suitIdx, suit] of this.suits.entries()) {
+        for (const suit of SUITS) {
             // Create card for each rank in each suit
-            for (const [rankIdx, rank] of this.ranks.entries()) {
-                this.cards.push({ 
-                    id: getCardString({suit, rank}), 
-                    suit, 
-                    rank, 
-                    value: (suitIdx + rankIdx) 
-                })
+            for (const rank of RANKS) {
+                this.cards.push(new Card(suit, rank))
             }
         }
     }
 
     /**
      * @description Get random card from deck
-     * @returns {{ id: string, suit: string, rank: string }}
+     * @returns {Card}
      */
     pullCard() {
         /**
@@ -80,17 +49,15 @@ class Deck {
     
     /**
      * @description Create a new hand
-     * @param {Number} handLength - Length of hand
+     * @param {Number} length - Length of hand
      * @returns {{ id: string, cards: [Card] }}
      */
-    deal(handLength = 5) {
-        const cards = []
+    deal(length = 5) {
+        // const cards = []
         const id = uuidv4()
 
         // Add cards to hand
-        while (cards.length < handLength) {
-            cards.push(this.pullCard())
-        }
+        const cards = Array.from({ length }, () => this.pullCard())
 
         // Add hand to current hands
         this.hands.set(id, cards)
