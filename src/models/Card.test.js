@@ -1,4 +1,4 @@
-const { SUITS, RANKS } = require("../constants")
+const { SUITS, RANKS, getSuit, getRank } = require("../constants")
 const { default: Card } = require("./Card")
 
 describe('Card', () => {
@@ -16,8 +16,8 @@ describe('Card', () => {
 
     test('should have id, suit, rank, and value', () => {
         expect(card.value).toEqual(5)
-        expect(card.suit).toEqual(suit)
-        expect(card.rank).toEqual(rank)
+        expect(card.suit).toEqual(getSuit(suit))
+        expect(card.rank).toEqual(getRank(rank))
         expect(card.id).toEqual(`${suit} ${rank}`)
     })
 })

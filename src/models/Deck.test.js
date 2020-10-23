@@ -18,11 +18,11 @@ describe('Deck', () => {
     test('it should have 52 cards', () => {
         expect(deck.id).not.toBeNull()
         expect(deck.cards.length).toEqual(52)
-        expect(deck.cards.find(c => c.suit === 'spades' && c.rank === '10')).not.toEqual(undefined)
-        expect(deck.cards.find(c => c.suit === 'diamonds' && c.rank === 'K')).not.toEqual(undefined)
-        expect(deck.cards.find(c => c.suit === 'hearts' && c.rank === 'A')).not.toEqual(undefined)
-        expect(deck.cards.find(c => c.suit === 'clubs' && c.rank === '5')).not.toEqual(undefined)
-        expect(deck.cards.find(c => c.suit === 'clubs' && c.rank === '1')).toEqual(undefined)
+        expect(deck.cards.find(c => c.id === 'spades 10')).not.toEqual(undefined)
+        expect(deck.cards.find(c => c.id === 'diamonds K')).not.toEqual(undefined)
+        expect(deck.cards.find(c => c.id === 'hearts A')).not.toEqual(undefined)
+        expect(deck.cards.find(c => c.id === 'clubs 5')).not.toEqual(undefined)
+        expect(deck.cards.find(c => c.id === 'clubs 1')).toEqual(undefined)
     })
 
     test('it should add value to cards', () => {

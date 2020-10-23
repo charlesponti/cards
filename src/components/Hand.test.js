@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import Hand from './Hand'
 import Deck from '../models/Deck'
-import { RANKMOJIS, SUITMOJIS } from '../constants'
+import { getRank, getSuit } from '../constants'
 
 describe('<Hand/>', () => {
     /**
@@ -24,9 +24,8 @@ describe('<Hand/>', () => {
         
         expect(getByText(`Score: ${hand.score}`)).toBeInTheDocument()
         hand.cards.forEach(({ rank, suit, value }) => {
-            expect(getAllByText(RANKMOJIS[rank] || rank).length).toBeGreaterThan(0)
-            expect(getAllByText(SUITMOJIS[suit] || suit).length).toBeGreaterThan(0)
-            expect(getAllByText(value+'').length).toBeGreaterThan(0)
+            expect(getAllByText(getRank(rank)).length).toBeGreaterThan(0)
+            expect(getAllByText(getSuit(suit)).length).toBeGreaterThan(0)
         })
     })
 

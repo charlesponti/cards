@@ -2,13 +2,24 @@ import React from 'react'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardHeader from '@material-ui/core/CardHeader'
-import { RANKMOJIS, SUITMOJIS } from '../constants'
+import { makeStyles } from '@material-ui/core'
 
-export default function PlayingCard({ suit, rank, value }) {
+const useStyles = makeStyles({
+    card: {
+        height: '125px',
+    },
+    rankWithEmoji: {
+        paddingTop: '12px'
+    }
+})
+
+export default function PlayingCard({ suit, rank }) {
+    const styles = useStyles()
+    
     return (
-        <Card>
-            <CardHeader title={SUITMOJIS[suit] || suit} subheader={value} />
-            <CardContent>{RANKMOJIS[rank] || rank}</CardContent>
+        <Card className={styles.card}>
+            <CardHeader title={suit} />
+            <CardContent>{rank}</CardContent>
         </Card>
     )   
 }

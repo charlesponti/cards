@@ -23,11 +23,29 @@ export const SUITMOJIS = {
 
 /**
  * @description Emojis of ranks in a suite of cards
- * @type {{ [string]: sting }}
+* @type {Object.<string, string>}
  */
 export const RANKMOJIS = {
     'K': "🤴",
     'Q': "👸",
     'J': "🎃",
     'A': '👾'
+}
+
+/**
+ * @description Get rendered version of suit
+ * @param {String} suit - Suit to render
+ * @returns {String} 
+ */
+export function getSuit(suit) {
+    return SUITMOJIS[suit] || suit
+}
+
+/**
+ * @description Get rendered version of rank
+ * @param {String} rank - Rank to render
+ * @returns {String} 
+ */
+export function getRank(rank) {
+    return RANKMOJIS[rank] || rank
 }

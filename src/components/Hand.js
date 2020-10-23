@@ -8,13 +8,8 @@ const useStyles = makeStyles({
     root: {
         color: 'white',
         marginTop: '1rem',
-        paddingTop: '0.5rem',
-        paddingBottom: '0.5rem',
-    },
-    card: {
-        marginLeft: '1rem',
-        minWidth: '20%',
-        fontSize: '10px'
+        paddingTop: '1rem',
+        paddingBottom: '1rem',
     },
     winner: {
         backgroundColor: '#6bb36b'
@@ -35,8 +30,12 @@ export default function Hand({ cards, id, score, isWinner }) {
                     {isWinner ? 'WINNER!!' : 'LOSER 👎'}
                 </p>
             </Grid>
-            <Grid container direction="row" justify="center">
-                {cards.map((card, idx) => <PlayingCard key={card.id} {...card} className={styles.card}/>)}
+            <Grid container direction="row" justify="center" spacing={2}>
+                {cards.map((card, idx) => (
+                    <Grid item xs={2} key={card.id}>
+                        <PlayingCard {...card} />
+                    </Grid>
+                ))}
             </Grid>
         </Grid>
     )

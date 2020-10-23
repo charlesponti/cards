@@ -53,7 +53,6 @@ class Deck {
      * @returns {{ id: String, cards: [Card], score: Number }}
      */
     deal(length = 5) {
-        // const cards = []
         const id = uuidv4()
 
         // Add cards to hand

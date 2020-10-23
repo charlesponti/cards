@@ -1,4 +1,4 @@
-import { RANKS, SUITS } from '../constants';
+import { getRank, getSuit, RANKS, SUITS } from '../constants';
 
 class Card {
     /**
@@ -28,8 +28,8 @@ class Card {
      */
     constructor(suit, rank) {
         this.id = `${suit} ${rank}`
-        this.suit = suit
-        this.rank = rank
+        this.suit = getSuit(suit)
+        this.rank = getRank(rank)
         // NOTE: Add 2 to adjust for 0-indexing
         this.value = SUITS.indexOf(suit) + RANKS.indexOf(rank) + 2
     }

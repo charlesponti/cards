@@ -7,11 +7,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import Hand from './components/Hand';
 
 const useStyles = makeStyles({
+  root: {
+    maxWidth: '600px',
+    margin: '0 auto'
+  },
   button: {
     backgroundColor: 'white'
   },
   buttonContainer: {
-    marginTop: '2rem'
+    marginTop: '2rem',
+    marginBottom: '2rem'
   },
   winner: {
     color: 'green',
@@ -37,7 +42,7 @@ function App() {
   return (
     <div className="App">
         <h1>Luck Of The Draw</h1>
-        <Grid direction="column" container>
+        <Grid container className={styles.root}>
           {hands.map((hand) => (
               <Hand 
                 key={hand.id} 
@@ -52,6 +57,7 @@ function App() {
             variant="outlined" 
             onClick={onCreateHand}
             className={styles.button}
+            disabled={deck.cards.length < 5}
           >
             Deal Hand
           </Button>
