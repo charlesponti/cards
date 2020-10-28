@@ -54,9 +54,15 @@ class Deck {
      */
     deal(length = 5) {
         const id = uuidv4()
-
+        let score = 0
         // Add cards to hand
-        const cards = Array.from({ length }, () => this.pullCard())
+        // const cards = Array.from({ length }, () => this.pullCard())
+
+        const cards = Array.from({ length }, () => {
+            const card = this.pullCard()
+            score += card.value
+            return card
+        })
 
         // Add hand to current hands
         this.hands.set(id, cards)
@@ -64,7 +70,7 @@ class Deck {
         return { 
             id, 
             cards, 
-            score: cards.reduce((sum, c) => sum + c.value, 0)
+            score
         }
     }
 
