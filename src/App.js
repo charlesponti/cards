@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 })
 
 function App() {
-  const [deck] = useState(new Deck())
+  const [deck, setDeck] = useState(new Deck())
   const [hands, setHands] = useState([])
   const [ winner, setWinner ] = useState(undefined)
   const styles = useStyles()
@@ -37,6 +37,12 @@ function App() {
     else if (winner === undefined) setWinner(hand)
 
     setHands([...hands, hand])
+  }
+
+  function onCollectHands() {
+    deck.collectHands()
+    setHands([])
+    setDeck(new Deck())
   }
 
   return (
@@ -60,6 +66,13 @@ function App() {
             disabled={deck.cards.length < 5}
           >
             Deal Hand
+          </Button>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={onCollectHands}
+          >
+            Collect hands
           </Button>
         </div>
     </div>
